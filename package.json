@@ -1,0 +1,20 @@
+{
+  "name": "midad-oman-education",
+  "version": "1.0.0",
+  "private": true,
+  "engines": {"node": ">=20 <23"},
+  "description": "مِداد التعليمية - منصة تعليمية عمانية مع لوحة تحكم ومساعد ذكاء اصطناعي",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "better-sqlite3": "^11.10.0",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "express-session": "^1.18.1",
+    "openai": "^5.12.2"
+  }
+}

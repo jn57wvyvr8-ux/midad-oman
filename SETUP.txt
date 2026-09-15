@@ -1,0 +1,8 @@
+1) انسخ .env.example إلى .env
+2) ضع كلمة مرور الأدمن التي اخترتها في ADMIN_PASSWORD.
+3) ضع مفتاح OpenAI في OPENAI_API_KEY لتفعيل المساعد الذكي.
+4) npm install
+5) npm start
+6) افتح http://localhost:3000
+
+اسم مستخدم الأدمن مضبوط افتراضيًا على: k617g

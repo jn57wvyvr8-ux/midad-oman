@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>مِداد التعليمية</title>
+<style>
+:root{--blue:#1264b5;--ink:#17324d;--bg:#f5f8fc;--line:#dce7f1}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Tahoma,Arial,sans-serif}
+header{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:4}.nav{max-width:1180px;margin:auto;padding:14px 18px;display:flex;align-items:center;gap:18px}.logo{font-size:28px;font-weight:900;color:var(--blue);margin-left:auto}.logo small{display:block;font-size:10px;color:#7a8b9d;font-weight:400}
+nav{display:flex;gap:16px}nav a{color:var(--ink)}nav a:hover{color:var(--blue)}
+button{cursor:pointer;border:0;border-radius:10px;padding:10px 15px;font:inherit}.primary{background:var(--blue);color:white}.ghost{background:#edf5ff;color:var(--blue);border:1px solid #cfe2f8}
+.wrap{max-width:1180px;margin:auto;padding:20px}.hero{background:white;border:1px solid var(--line);border-radius:22px;padding:45px;margin-top:20px}.hero h1{font-size:44px;margin:0 0 10px}.hero h1 span{color:var(--blue)}.hero p{font-size:18px;line-height:1.9;max-width:800px}.search{display:flex;max-width:700px;background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden;margin-top:20px}.search input{flex:1;border:0;padding:14px;outline:0;font-size:16px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px}.muted{color:#708295}.section-title{display:flex;justify-content:space-between;align-items:center;margin-top:30px}.empty{padding:30px;text-align:center;color:#74869a;background:white;border:1px dashed var(--line);border-radius:15px}
+.modal{position:fixed;inset:0;background:#0007;display:none;align-items:center;justify-content:center;padding:20px;z-index:10}.modal.open{display:flex}.modalbox{background:#fff;border-radius:18px;padding:25px;width:min(500px,100%)}input,textarea,select{width:100%;padding:12px;border:1px solid var(--line);border-radius:9px;margin:7px 0 12px;font:inherit}textarea{min-height:100px}
+#ai{position:fixed;bottom:18px;left:18px;z-index:8}.ai-btn{width:58px;height:58px;border-radius:50%;font-size:25px;background:#1264b5;color:#fff;box-shadow:0 8px 30px #1264b544}.ai-box{display:none;width:min(370px,calc(100vw - 36px));height:520px;background:white;border:1px solid var(--line);border-radius:18px;box-shadow:0 12px 40px #0002;overflow:hidden}.ai-box.open{display:flex;flex-direction:column}.ai-head{background:var(--blue);color:#fff;padding:14px}.messages{flex:1;overflow:auto;padding:12px}.msg{padding:10px 12px;border-radius:12px;margin:8px 0;line-height:1.7}.user{background:#edf5ff}.bot{background:#f4f6f8}.ai-form{display:flex;padding:10px;border-top:1px solid var(--line);gap:7px}.ai-form input{margin:0}.adminbar{display:none;background:#17324d;color:#fff;padding:10px}.adminbar.show{display:block}
+footer{margin-top:50px;background:#17324d;color:white;padding:28px}.footerin{max-width:1180px;margin:auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+@media(max-width:800px){nav{display:none}.grid{grid-template-columns:1fr}.hero h1{font-size:34px}}
+</style>
+</head>
+<body>
+<div id="adminbar" class="adminbar"><div class="wrap">وضع الأدمن: <button class="ghost" onclick="openAdmin()">فتح لوحة التحكم</button> <button onclick="logout()">تسجيل الخروج</button></div></div>
+<header><div class="nav"><div class="logo">مِداد<small>تعلّم • تدرب • تقدّم</small></div><nav><a href="#home">الرئيسية</a><a href="#content">المحتوى</a><a href="#quizzes">الاختبارات</a><a href="#about">عن الموقع</a></nav><button class="ghost" onclick="openAuth('register')">إنشاء حساب</button><button class="primary" onclick="openAuth('login')">تسجيل الدخول</button></div></header>
+
+<main id="home" class="wrap">
+<section class="hero"><h1><span>مِداد</span> التعليمية</h1><p>منصة تعليمية لطلاب وطالبات سلطنة عُمان. أضف المحتوى الحقيقي من لوحة الأدمن، ودع الطلاب يستخدمون المساعد الذكي لفهم دروسهم.</p>
+<div class="search"><input id="search" placeholder="ابحث في المحتوى الذي أضافه الأدمن..." oninput="renderContent()"><button class="primary" onclick="renderContent()">بحث</button></div></section>
+
+<section class="section-title"><h2>المحتوى</h2></section><section id="content" class="grid"></section>
+<section class="section-title"><h2>الاختبارات</h2></section><section id="quizzes" class="grid"></section>
+<section id="about" class="card" style="margin-top:30px"><h2>عن الموقع</h2><p>إعداد الطالب: <b>عمر البلوشي</b> — مدرسة الصلت بن مالك</p><p>Instagram: <b>@k617g</b></p></section>
+</main>
+
+<div id="ai"><div id="aibox" class="ai-box"><div class="ai-head">🤖 مساعد مِداد <button style="float:left;background:#ffffff22;color:white" onclick="toggleAI()">×</button></div><div id="messages" class="messages"><div class="msg bot">مرحبًا! اكتب سؤالك الدراسي وسأساعدك على فهمه.</div></div><form class="ai-form" onsubmit="askAI(event)"><input id="aimsg" placeholder="اكتب سؤالك..." required><button class="primary">إرسال</button></form></div><button class="ai-btn" onclick="toggleAI()">🤖</button></div>
+
+<div id="auth" class="modal"><div class="modalbox"><h2 id="authTitle"></h2><form onsubmit="submitAuth(event)"><input id="authName" placeholder="الاسم" style="display:none"><input id="authUser" placeholder="اسم المستخدم" required><input id="authPass" type="password" placeholder="كلمة المرور" required><button class="primary" style="width:100%">متابعة</button></form><button class="ghost" style="width:100%;margin-top:8px" onclick="closeModal('auth')">إغلاق</button></div></div>
+
+<div id="admin" class="modal"><div class="modalbox" style="width:min(900px,100%);max-height:90vh;overflow:auto"><h2>لوحة تحكم مِداد</h2>
+<h3>إضافة صف</h3><form onsubmit="addGrade(event)"><input id="gradeName" placeholder="مثال: الصف التاسع" required><button class="primary">إضافة</button></form><div id="grades"></div>
+<h3>إضافة محتوى</h3><form onsubmit="addContent(event)"><input id="ctitle" placeholder="العنوان" required><select id="ctype"><option value="ملخص">ملخص</option><option value="كتاب">كتاب إلكتروني</option><option value="اختبار">اختبار</option><option value="مادة تعليمية">مادة تعليمية</option></select><input id="cgrade" placeholder="الصف"><input id="csubject" placeholder="المادة"><textarea id="cdesc" placeholder="الوصف"></textarea><input id="curl" placeholder="رابط الملف/المحتوى إن وجد"><button class="primary">حفظ المحتوى</button></form>
+<h3>المحتوى الحالي</h3><div id="adminContent"></div>
+<button class="ghost" onclick="closeModal('admin')">إغلاق</button></div></div>
+
+<footer><div class="footerin"><div>مِداد التعليمية</div><div>إعداد الطالب: عمر البلوشي — مدرسة الصلت بن مالك</div><div>Instagram: @k617g</div></div></footer>
+<script>
+let authMode="login";
+const $=id=>document.getElementById(id);
+async function api(url,opt={}){const r=await fetch(url,{headers:{'Content-Type':'application/json',...(opt.headers||{})},...opt});const d=await r.json().catch(()=>({}));if(!r.ok)throw new Error(d.error||"حدث خطأ");return d}
+function openAuth(mode){authMode=mode;$("authTitle").textContent=mode==="login"?"تسجيل الدخول":"إنشاء حساب";$("authName").style.display=mode==="login"?"none":"block";$("auth").classList.add("open")}
+function closeModal(id){$(id).classList.remove("open")}
+async function submitAuth(e){e.preventDefault();try{const d=await api("/api/"+(authMode==="login"?"login":"register"),{method:"POST",body:JSON.stringify({username:$("authUser").value,password:$("authPass").value,name:$("authName").value})});closeModal("auth");setMe(d.user)}catch(e){alert(e.message)}}
+async function logout(){await api("/api/logout",{method:"POST"});location.reload()}
+function setMe(u){if(u?.role==="admin")$("adminbar").classList.add("show")}
+async function init(){try{const d=await api("/api/me");setMe(d.user)}catch{}renderContent();renderQuizzes()}
+async function renderContent(){const q=$("search").value.trim().toLowerCase();const data=await api("/api/content");const filtered=data.filter(x=>(x.title+" "+x.grade+" "+x.subject+" "+x.description).toLowerCase().includes(q));$("content").innerHTML=filtered.length?filtered.map(x=>`<article class="card"><h3>${esc(x.title)}</h3><p class="muted">${esc(x.type)}${x.grade?" • "+esc(x.grade):""}${x.subject?" • "+esc(x.subject):""}</p><p>${esc(x.description||"")}</p>${x.url?`<a class="primary" style="display:inline-block;padding:9px 12px;border-radius:8px" href="${esc(x.url)}" target="_blank">فتح المحتوى</a>`:""}</article>`).join(""):'<div class="empty">لا يوجد محتوى منشور بعد. أضفه من لوحة الأدمن.</div>'}
+async function renderQuizzes(){const data=await api("/api/quizzes");$("quizzes").innerHTML=data.length?data.map(q=>`<article class="card"><h3>${esc(q.title)}</h3><p>${esc(q.grade||"")} ${q.subject?"• "+esc(q.subject):""}</p><button class="primary" onclick="startQuiz(${q.id})">ابدأ الاختبار</button></article>`).join(""):'<div class="empty">لا توجد اختبارات بعد.</div>'}
+async function startQuiz(id){const q=(await api("/api/quizzes")).find(x=>x.id===id);if(!q)return;let score=0;q.questions.forEach((x,i)=>{const a=prompt((i+1)+". "+x.question+"\n"+x.options.map((o,j)=>j+": "+o).join("\n"));if(Number(a)===JSON.parse(x.options_json||"[]").indexOf(x.options[Number(a)]))score++});alert("نتيجتك: "+score+" / "+q.questions.length)}
+function toggleAI(){$("aibox").classList.toggle("open")}
+async function askAI(e){e.preventDefault();const input=$("aimsg"),msg=input.value.trim();if(!msg)return;input.value="";$("messages").insertAdjacentHTML("beforeend",`<div class="msg user">${esc(msg)}</div>`);try{const d=await api("/api/ai/chat",{method:"POST",body:JSON.stringify({message:msg})});$("messages").insertAdjacentHTML("beforeend",`<div class="msg bot">${esc(d.answer).replace(/\n/g,"<br>")}</div>`)}catch(e){$("messages").insertAdjacentHTML("beforeend",`<div class="msg bot">${esc(e.message)}</div>`)}$("messages").scrollTop=$("messages").scrollHeight}
+async function openAdmin(){try{await api("/api/me").then(d=>{if(d.user?.role!=="admin")throw new Error("غير مصرح")});$("admin").classList.add("open");loadAdmin()}catch(e){alert(e.message)}}
+async function addGrade(e){e.preventDefault();try{await api("/api/admin/grade",{method:"POST",body:JSON.stringify({name:$("gradeName").value})});$("gradeName").value="";loadAdmin()}catch(e){alert(e.message)}}
+async function addContent(e){e.preventDefault();try{await api("/api/admin/content",{method:"POST",body:JSON.stringify({title:$("ctitle").value,type:$("ctype").value,grade:$("cgrade").value,subject:$("csubject").value,description:$("cdesc").value,url:$("curl").value})});e.target.reset();loadAdmin();renderContent()}catch(e){alert(e.message)}}
+async function loadAdmin(){const [grades,contents]=await Promise.all([api("/api/grades"),api("/api/content")]);$("grades").innerHTML=grades.map(g=>`<div class="card"><b>${esc(g.name)}</b> <button onclick="delGrade(${g.id})">حذف</button></div>`).join("");$("adminContent").innerHTML=contents.map(c=>`<div class="card"><b>${esc(c.title)}</b><br>${esc(c.type)} — ${esc(c.grade||"")}<br><button onclick="delContent(${c.id})">حذف</button></div>`).join("")||"<p>لا يوجد محتوى.</p>"}
+async function delGrade(id){if(confirm("حذف الصف؟")){await api("/api/admin/grade/"+id,{method:"DELETE"});loadAdmin()}}
+async function delContent(id){if(confirm("حذف المحتوى؟")){await api("/api/admin/content/"+id,{method:"DELETE"});loadAdmin();renderContent()}}
+function esc(s){return String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
+init();
+</script>
+</body></html>
